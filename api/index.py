@@ -1,10 +1,8 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, jsonify, request
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'
 
-# In-memory storage (resets on each deployment)
 data_store = {"users": {}, "problems": {
     "1": {
         "title": "Two Sum",
@@ -24,11 +22,7 @@ data_store = {"users": {}, "problems": {
 
 @app.route('/')
 def home():
-    return render_template('home.html')
-
-@app.route('/platform')
-def platform():
-    return render_template('platform.html')
+    return jsonify({"message": "CodeQuest API", "status": "running"})
 
 @app.route('/api/user/<username>')
 def get_user(username):
@@ -52,8 +46,9 @@ def get_problems():
 
 @app.route('/api/submit', methods=['POST'])
 def submit_solution():
-    username = request.json['username']
-    problem_id = request.json['problem_id']
+    data = request.get_json()
+    username = data['username']
+    problem_id = data['problem_id']
     
     problem = data_store['problems'][problem_id]
     
@@ -64,17 +59,6 @@ def submit_solution():
     if problem_id not in user['solved']:
         user['solved'].append(problem_id)
         user['xp'] += problem['xp']
-        
-        today = datetime.now().date()
-        if user['last_solved']:
-            last_date = datetime.fromisoformat(user['last_solved']).date()
-            if today - last_date == timedelta(days=1):
-                user['streak'] += 1
-            elif today - last_date > timedelta(days=1):
-                user['streak'] = 1
-        else:
-            user['streak'] = 1
-        
-        user['last_solved'] = today.isoformat()
+        user['last_solved'] = datetime.now().date().isoformat()
     
     return jsonify({"success": True, "xp_gained": problem['xp'], "user": user})
