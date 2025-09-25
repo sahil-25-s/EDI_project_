@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeQuest - Coding Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='platform.css') }}">
+</head>
+<body>
+    <div class="platform-container">
+        <!-- Enhanced Header -->
+        <header class="platform-header">
+            <div class="header-left">
+                <a href="/" class="logo">🎮 CodeQuest</a>
+                <div class="breadcrumb">/ Coding Platform</div>
+            </div>
+            <div class="user-section" id="userSection">
+                <div class="login-form" id="loginForm">
+                    <input type="text" id="username" placeholder="Enter username" class="username-input">
+                    <button onclick="loadUser()" class="btn-login">🚀 Start Coding</button>
+                </div>
+                <div class="user-info" id="userInfo" style="display: none;">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName"></div>
+                        <div class="user-stats-mini" id="userStatsMini"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Platform -->
+        <div class="platform-content">
+            <!-- Enhanced Left Panel -->
+            <div class="problems-panel">
+                <div class="panel-header">
+                    <h3>🏆 Challenges</h3>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" onclick="filterProblems('all')">All</button>
+                        <button class="filter-tab" onclick="filterProblems('easy')">Easy</button>
+                        <button class="filter-tab" onclick="filterProblems('medium')">Medium</button>
+                        <button class="filter-tab" onclick="filterProblems('hard')">Hard</button>
+                    </div>
+                </div>
+                <div class="problems-list" id="problemsList"></div>
+            </div>
+
+            <!-- Enhanced Center Panel -->
+            <div class="main-panel">
+                <div class="problem-view" id="problemView">
+                    <div class="welcome-screen">
+                        <div class="welcome-icon">🎯</div>
+                        <h2>Ready to Level Up?</h2>
+                        <p>Select a challenge from the left panel to start your coding journey!</p>
+                        <div class="quick-stats">
+                            <div class="quick-stat">
+                                <div class="stat-icon">⚡</div>
+                                <div class="stat-text">Earn XP for every solution</div>
+                            </div>
+                            <div class="quick-stat">
+                                <div class="stat-icon">🔥</div>
+                                <div class="stat-text">Build daily streaks</div>
+                            </div>
+                            <div class="quick-stat">
+                                <div class="stat-icon">🏆</div>
+                                <div class="stat-text">Unlock achievements</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="problem-content" id="problemContent" style="display: none;">
+                        <div class="problem-header">
+                            <h2 id="problemTitle"></h2>
+                            <div class="problem-meta">
+                                <span class="difficulty-badge" id="difficultyBadge"></span>
+                                <span class="xp-reward" id="xpReward"></span>
+                            </div>
+                        </div>
+                        <div class="problem-description" id="problemDescription"></div>
+                    </div>
+                </div>
+                
+                <div class="code-section" id="codeSection" style="display: none;">
+                    <div class="editor-toolbar">
+                        <div class="toolbar-left">
+                            <select id="languageSelect" class="language-select">
+                                <option value="python">🐍 Python</option>
+                                <option value="cpp">⚡ C++</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-right">
+                            <button onclick="runCode()" class="btn-run">▶️ Run</button>
+                            <button onclick="submitSolution()" class="btn-submit">🚀 Submit</button>
+                        </div>
+                    </div>
+                    <div class="code-editor">
+                        <textarea id="codeArea" placeholder="Write your solution here..." spellcheck="false"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Right Panel -->
+            <div class="progress-panel">
+                <div class="level-card" id="levelCard">
+                    <div class="level-header">
+                        <div class="level-icon">⭐</div>
+                        <div class="level-info">
+                            <div class="level-number">Level 1</div>
+                            <div class="level-title">Beginner</div>
+                        </div>
+                    </div>
+                    <div class="xp-progress">
+                        <div class="xp-bar">
+                            <div class="xp-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="xp-text">0 / 100 XP</div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <h4>📊 Your Stats</h4>
+                    <div class="stat-item">
+                        <span class="stat-label">Problems Solved</span>
+                        <span class="stat-value" id="problemsSolved">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Current Streak</span>
+                        <span class="stat-value" id="currentStreak">0 🔥</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total XP</span>
+                        <span class="stat-value" id="totalXP">0</span>
+                    </div>
+                </div>
+
+                <div class="achievements-card" id="achievementsCard">
+                    <h4>🏅 Achievements</h4>
+                    <div class="achievements-list" id="achievementsList">
+                        <div class="no-achievements">Complete challenges to unlock achievements!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Success Modal -->
+        <div class="modal-overlay" id="successModal">
+            <div class="success-modal">
+                <div class="modal-header">
+                    <div class="success-icon">🎉</div>
+                    <h2>Problem Solved!</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="xp-gained" id="xpGainedText">+20 XP</div>
+                    <div class="celebration-text">Excellent work! Keep the momentum going!</div>
+                    <div class="level-up-notice" id="levelUpNotice" style="display: none;">
+                        <div class="level-up-icon">⭐</div>
+                        <div class="level-up-text">Level Up!</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="closeModal()" class="btn-continue">Continue Coding</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='platform.js') }}"></script>
+</body>
+</html>

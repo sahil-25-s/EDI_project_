@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeQuest - Gamified Coding Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header with user stats -->
+        <header class="game-header">
+            <div class="logo">🎮 CodeQuest</div>
+            <div class="user-stats" id="userStats">
+                <input type="text" id="username" placeholder="Enter username" class="username-input">
+                <button onclick="loadUser()" class="btn-primary">Login</button>
+            </div>
+        </header>
+
+        <!-- Main game area -->
+        <div class="game-content">
+            <!-- Left sidebar - Problems list -->
+            <div class="problems-panel">
+                <h3>🏆 Challenges</h3>
+                <div id="problemsList"></div>
+            </div>
+
+            <!-- Center - Problem details and code editor -->
+            <div class="main-panel">
+                <div class="problem-details" id="problemDetails">
+                    <h2>Select a problem to start coding!</h2>
+                    <p>Choose from the challenges on the left to begin your coding journey.</p>
+                </div>
+                
+                <div class="code-editor" id="codeEditor" style="display: none;">
+                    <div class="editor-header">
+                        <select id="languageSelect">
+                            <option value="python">Python</option>
+                            <option value="cpp">C++</option>
+                        </select>
+                        <button onclick="submitSolution()" class="btn-success">🚀 Submit</button>
+                    </div>
+                    <textarea id="codeArea" placeholder="Write your solution here..."></textarea>
+                </div>
+            </div>
+
+            <!-- Right sidebar - User progress -->
+            <div class="progress-panel">
+                <div class="level-display" id="levelDisplay">
+                    <div class="level">Level 1</div>
+                    <div class="xp-bar">
+                        <div class="xp-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="xp-text">0 / 100 XP</div>
+                </div>
+
+                <div class="achievements" id="achievements">
+                    <h4>🏅 Achievements</h4>
+                    <div class="achievement-list"></div>
+                </div>
+
+                <div class="streak-counter" id="streakCounter">
+                    <h4>🔥 Streak</h4>
+                    <div class="streak-number">0 days</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success modal -->
+        <div class="modal" id="successModal">
+            <div class="modal-content">
+                <h2>🎉 Problem Solved!</h2>
+                <p id="xpGained">+20 XP gained!</p>
+                <div class="celebration">✨ Great job! ✨</div>
+                <button onclick="closeModal()" class="btn-primary">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

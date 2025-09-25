@@ -1,0 +1,58 @@
+{
+  "users": {
+    "Rohan": {
+      "xp": 0,
+      "level": 1,
+      "streak": 0,
+      "last_solved": null,
+      "solved": [],
+      "achievements": []
+    }
+  },
+  "problems": {
+    "1": {
+      "title": "Two Sum",
+      "difficulty": "Easy",
+      "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+      "examples": [
+        {
+          "input": "nums = [2,7,11,15], target = 9",
+          "output": "[0,1]"
+        }
+      ],
+      "xp": 10,
+      "test_cases": [
+        {
+          "input": "[2,7,11,15]\n9",
+          "output": "[0, 1]"
+        },
+        {
+          "input": "[3,2,4]\n6",
+          "output": "[1, 2]"
+        }
+      ]
+    },
+    "2": {
+      "title": "Reverse Integer",
+      "difficulty": "Medium",
+      "description": "Given a signed 32-bit integer x, return x with its digits reversed.",
+      "examples": [
+        {
+          "input": "x = 123",
+          "output": "321"
+        }
+      ],
+      "xp": 20,
+      "test_cases": [
+        {
+          "input": "123",
+          "output": "321"
+        },
+        {
+          "input": "-123",
+          "output": "-321"
+        }
+      ]
+    }
+  }
+}
