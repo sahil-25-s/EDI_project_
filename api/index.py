@@ -22,11 +22,31 @@ data_store = {"users": {}, "problems": {
 
 @app.route('/')
 def home():
-    return jsonify({"message": "CodeQuest API", "status": "running"})
+    return '''<!DOCTYPE html>
+<html><head><title>CodeQuest</title></head>
+<body>
+<h1>🎮 CodeQuest</h1>
+<p>Level Up Your Coding Skills</p>
+<a href="/platform">Start Coding</a>
+</body></html>'''
 
 @app.route('/platform')
 def platform():
-    return jsonify({"message": "Platform endpoint", "redirect": "/platform.html"})
+    return '''<!DOCTYPE html>
+<html><head><title>CodeQuest Platform</title></head>
+<body>
+<h1>🎮 CodeQuest Platform</h1>
+<input type="text" id="username" placeholder="Enter username">
+<div id="problems"></div>
+<script>
+fetch('/api/problems').then(r=>r.json()).then(data=>{
+    document.getElementById('problems').innerHTML = Object.entries(data).map(([id,p])=>
+        `<div><h3>${p.title}</h3><p>${p.description}</p><button onclick="solve('${id}')">Solve</button></div>`
+    ).join('');
+});
+function solve(id){alert('Problem '+id+' selected!');}
+</script>
+</body></html>'''
 
 @app.route('/api/user/<username>')
 def get_user(username):
