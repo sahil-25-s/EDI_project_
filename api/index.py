@@ -24,6 +24,10 @@ data_store = {"users": {}, "problems": {
 def home():
     return jsonify({"message": "CodeQuest API", "status": "running"})
 
+@app.route('/platform')
+def platform():
+    return jsonify({"message": "Platform endpoint", "redirect": "/platform.html"})
+
 @app.route('/api/user/<username>')
 def get_user(username):
     if username not in data_store['users']:
