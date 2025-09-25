@@ -126,4 +126,5 @@ def check_achievements(user):
     return achievements
 
 # Vercel handler
-app = app
+if __name__ == '__main__':
+    app.run(debug=True)
